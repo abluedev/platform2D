@@ -36,7 +36,11 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets/Scripts/PlayerController.cs" />
+     <Compile Include="Assets/Scripts/Player/PlayerController.cs" />
+     <Compile Include="Assets/Scripts/Player/JumpController.cs" />
+     <Compile Include="Assets/Scripts/Player/ShadowDash.cs" />
+     <Compile Include="Assets/Scripts/Player/DashController.cs" />
+     <Compile Include="Assets/Scripts/Player/PlayerMovementController.cs" />
     <Reference Include="UnityEngine">
         <HintPath>/Applications/Unity/Hub/Editor/2021.3.16f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -804,8 +808,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\.gitignore" />
-    <Content Include="Assets\Scripts\.gitignore" />
+    <ProjectReference Include="UniRx.csproj">
+      <Project>{3d18663e-cfec-9574-ac7b-9fab8481e039}</Project>
+      <Name>UniRx</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
