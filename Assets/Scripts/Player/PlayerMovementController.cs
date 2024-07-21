@@ -4,80 +4,68 @@ using UnityEngine;
 
 public class PlayerMovementController: MonoBehaviour
     {
-
+        private PlayerControllerAnimations _playerControllerAnimations;
+        
         private Rigidbody2D _rigidbody2D;
         public float velocity;
-        PlayerController _playerController;
+      
         private UnityEngine.Vector3 _dashDirection;
         private float localDirection = 1;
-        public bool isDashing = false;
-        public bool isOnFloor;
         public float jumpForce = 15f;
-        public bool canDobleJump;
         public float checkRadius;
-        
+        private bool isDashing;
+        private SpriteRenderer _spriteRenderer;
         public Transform feetPosition;
         public LayerMask groundLayer;
-    
+        private readonly float SPEED = 5f;
+        
         private void Start()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
-            Dash();
-            if (isDashing)
-            {
-                Observable.Timer(TimeSpan.FromSeconds(0.3f)).Subscribe(_ => isDashing = false);
-                
-            }
-        }
-
-        void Update()
-        { 
-            Jump();
+            _playerControllerAnimations = GetComponent<PlayerControllerAnimations>();
         }
         
-        private void Jump()
+        public bool Jump()
         {
-            isOnFloor = Physics2D.OverlapCircle(feetPosition.position, checkRadius, groundLayer);
+            var isOnFloor = Physics2D.OverlapCircle(feetPosition.position, checkRadius, groundLayer);
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 if (isOnFloor)
                 {
                     _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, jumpForce);
-                    canDobleJump = true;
                 }
             }
-            DoubleJump();
+            return isOnFloor;
         }
         
-        private void DoubleJump()
+        
+        public float Walk()
         {
-            if (Input.GetKeyDown(KeyCode.Space) && !isOnFloor && canDobleJump)
+            var direction = (int)Input.GetAxisRaw("Horizontal");
+            if (!isDashing)
             {
-                _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, jumpForce);
-                canDobleJump = false;
+                _rigidbody2D.velocity = new Vector2(direction * SPEED, _rigidbody2D.velocity.y);
             }
+            return direction;
         }
-        
-        
-        private void Dash()
+
+        public void Dash(float direction)
         {
-            _dashDirection = GetDirection();
-            
-            if (!isDashing && Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.Q))
             {
-                
+                _dashDirection = GetDirection(direction);
                 isDashing = true;
-                _rigidbody2D.AddForce(_dashDirection * velocity, ForceMode2D.Impulse);
-                
+                _rigidbody2D.AddForce(_dashDirection * new Vector2(10,0), ForceMode2D.Impulse);
+                Observable.Timer(TimeSpan.FromSeconds(0.5)).Subscribe( _=> isDashing = false );
             }
         }
 
-    
-        private UnityEngine.Vector3 GetDirection()
+     
+        private UnityEngine.Vector3 GetDirection(float direction)
         {
-            if (_playerController.direction == 1 || _playerController.direction == -1)
+            if (direction == 1 || direction == -1)
             {
-                localDirection = _playerController.direction;
+                localDirection = direction;
             }
 
             if (localDirection == 1)

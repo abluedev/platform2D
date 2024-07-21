@@ -5,52 +5,38 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody2D _rigidbody2D;
-    private Animator _animator;
-    private SpriteRenderer _spriteRenderer;
-    private DashController _dashController;
-    public float direction;
-    public float windForce = 5f;
+    private PlayerControllerAnimations _playerControllerAnimations;
+    private PlayerMovementController _playerMovementController;
 
-    private readonly float SPEED = 5f;
+    private float direction;
+    private bool isOnFloor;
 
-    // Start is called before the first frame update
     void Start()
     {
-        _rigidbody2D = GetComponent<Rigidbody2D>();
-        _animator = GetComponent<Animator>();
-        _dashController = GetComponent<DashController>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        _rigidbody2D.drag = windForce; 
-
-
+        _playerControllerAnimations = GetComponent<PlayerControllerAnimations>();
+        _playerMovementController = GetComponent<PlayerMovementController>();
+    
     }
 
-    // Update is called once per frame
     void Update()
     {
-        Walk(); }
+        Walk();
+        Jump();
+    }
 
-
-    private void Walk()
+    public void Walk()
     {
-        /*
-         *     var direction = (int)Input.GetAxisRaw("Horizontal");
-               _rigidbody2D.velocity = new Vector2(direction * SPEED, _rigidbody2D.velocity.y);
-               _animator.SetBool("isRunning", direction == 1 || direction == -1);
-               _spriteRenderer.flipX = direction == -1;
-         */
+        direction = _playerMovementController.Walk();
+        _playerControllerAnimations.StartOrStopAnimateRun(direction);
+        _playerControllerAnimations.TurnOutSprite(direction);
 
-        if (!_dashController.isDashing)
-        {
-            direction = (int)(Input.GetAxisRaw("Horizontal"));
-            if (direction == 1 || direction == -1)
-            {
-                _rigidbody2D.velocity = new Vector2(direction * SPEED, _rigidbody2D.velocity.y);
-                _animator.SetBool("isRunning", direction == 1 || direction == -1);
-                _spriteRenderer.flipX = direction == -1;
+    }
+    
+    public void Jump()
+    {
+        isOnFloor = _playerMovementController.Jump();
+        _playerControllerAnimations.StartOrStopAnimateRun(direction);
+        _playerControllerAnimations.TurnOutSprite(direction);
 
-            }
-        }
     }
 }

@@ -180,11 +180,10 @@ GameObject:
   - component: {fileID: 181061096}
   - component: {fileID: 181061095}
   - component: {fileID: 181061094}
+  - component: {fileID: 181061102}
   - component: {fileID: 181061093}
-  - component: {fileID: 181061099}
   - component: {fileID: 181061098}
-  - component: {fileID: 181061100}
-  - component: {fileID: 181061101}
+  - component: {fileID: 181061103}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -204,7 +203,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c228faadbf683491387dfb47d55820a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
 --- !u!212 &181061094
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -341,7 +339,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
---- !u!114 &181061099
+--- !u!114 &181061102
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -350,17 +348,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 181061092}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f6cfdc38c824012b531040acef571c1, type: 3}
+  m_Script: {fileID: 11500000, guid: 2fd838ded4df495781316dffb42a12a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  velocity: 10
   jumpForce: 15
   canDobleJump: 0
+  checkRadius: 0.8
   feetPosition: {fileID: 969584228}
-  checkRadius: 0.3
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
---- !u!114 &181061100
+--- !u!114 &181061103
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -369,24 +368,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 181061092}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4de56e06b377249c3b42f6f0c50de276, type: 3}
+  m_Script: {fileID: 11500000, guid: 1040aca714464e04a1cd38deeb034fd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _parentSprite: {fileID: 0}
---- !u!114 &181061101
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 181061092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd4b07e765ef46e29a5e73de072d5b9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  velocity: 5
-  isDashing: 0
 --- !u!1 &218038671
 GameObject:
   m_ObjectHideFlags: 0
